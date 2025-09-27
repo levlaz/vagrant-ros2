@@ -48,5 +48,5 @@ echo "Building custom ROS2 Jazzy box..."
 packer build packer.json
 
 echo "Build completed! You can now use the box with:"
-echo "  vagrant box add ros2-jazzy-ubuntu-noble ros2-jazzy-ubuntu-noble-vmware.box"
+echo "  vagrant box add ros2-jazzy ros2-jazzy-arm64-vmware.box"
 echo "  vagrant up"

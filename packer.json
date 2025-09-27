@@ -7,11 +7,13 @@
         "memsize": "8192",
         "numvcpus": "4",
         "guestos": "ubuntu-64",
-        "virtualhw.version": "19"
+        "virtualhw.version": "19",
+        "architecture": "arm64"
       },
       "vmx_data_post": {
         "memsize": "8192",
-        "numvcpus": "4"
+        "numvcpus": "4",
+        "architecture": "arm64"
       },
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -57,6 +59,9 @@
         "# Install ROS 2 Jazzy Desktop (includes RViz, demos, tutorials)",
         "sudo apt-get install -y ros-jazzy-desktop",
         "",
+        "# Install Foxglove ROS bridge",
+        "sudo apt-get install -y ros-jazzy-foxglove-bridge",
+        "",
         "# Install additional ROS 2 tools",
         "sudo apt-get install -y python3-pip",
         "sudo pip3 install -U colcon-common-extensions",
@@ -68,6 +73,28 @@
         "# Set up environment for vagrant user",
         "echo 'source /opt/ros/jazzy/setup.bash' >> /home/vagrant/.bashrc",
         "echo 'source /opt/ros/jazzy/setup.bash' >> /root/.bashrc",
+        "",
+        "# Create systemd service for Foxglove bridge auto-launch",
+        "sudo tee /etc/systemd/system/foxglove-bridge.service > /dev/null <<EOF",
+        "[Unit]",
+        "Description=Foxglove ROS Bridge",
+        "After=network.target",
+        "",
+        "[Service]",
+        "Type=simple",
+        "User=vagrant",
+        "Environment=ROS_DOMAIN_ID=0",
+        "ExecStart=/bin/bash -c 'source /opt/ros/jazzy/setup.bash && ros2 launch foxglove_bridge foxglove_bridge_launch.xml'",
+        "Restart=always",
+        "RestartSec=5",
+        "",
+        "[Install]",
+        "WantedBy=multi-user.target",
+        "EOF",
+        "",
+        "# Enable and start Foxglove bridge service",
+        "sudo systemctl daemon-reload",
+        "sudo systemctl enable foxglove-bridge.service",
         "",
         "# Create workspace directory",
         "mkdir -p /home/vagrant/ros2_ws/src",
@@ -94,7 +121,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "ros2-jazzy-ubuntu-noble-{{.Provider}}.box",
+      "output": "ros2-jazzy-arm64-vmware.box",
       "vagrantfile_template": "Vagrantfile.template"
     }
   ]
