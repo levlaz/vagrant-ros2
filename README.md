@@ -15,6 +15,8 @@ This project provides a virtualized ROS2 development environment that runs on Ap
   - VMware Fusion provider for Vagrant
     - [Vagrant VMware Provider Documentation](https://www.vagrantup.com/docs/providers/vmware)
     - [VMware Fusion Provider Plugin](https://github.com/hashicorp/vagrant-vmware-desktop)
+- Packer (for developing this project)
+  - [Packer Documentation](https://developer.hashicorp.com/packer/docs)
 - Sufficient disk space for the virtual machine
 - At least 8GB RAM (16GB recommended)
 
