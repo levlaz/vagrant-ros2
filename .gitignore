@@ -1,0 +1,95 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# VMware
+*.vmx
+*.vmxf
+*.vmdk
+*.vmsd
+*.vmsn
+*.vmss
+*.log
+*.lck
+*.nvram
+*.vmem
+*.vmsn
+*.vmss
+*.vmdk
+*.vmem
+*.vmsd
+*.vmx
+*.vmxf
+*.log
+*.lck
+*.nvram
+
+# ROS2
+build/
+install/
+log/
+*.pyc
+__pycache__/
+*.so
+*.o
+*.a
+*.la
+*.lo
+*.Plo
+*.Po
+*.orig
+*.rej
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Node modules (if using any Node.js tools)
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
