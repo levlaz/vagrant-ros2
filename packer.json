@@ -1,8 +1,10 @@
 {
   "builders": [
     {
-      "type": "vmware-vmx",
-      "source_path": "{{ user `source_vmx` }}",
+      "type": "vmware-iso",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha256",
       "vmx_data": {
         "memsize": "8192",
         "numvcpus": "4",
@@ -19,7 +21,19 @@
       "ssh_password": "vagrant",
       "ssh_timeout": "20m",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
-      "headless": false
+      "headless": true,
+      "boot_wait": "10s",
+      "boot_command": [
+        "<enter><wait><enter><wait><f6><esc><wait>",
+        " autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+        "<enter>"
+      ],
+      "http_directory": "http",
+      "http_port_min": 8000,
+      "http_port_max": 8099,
+      "disk_size": "50000",
+      "disk_type_id": "0",
+      "output_directory": "output-vmware-iso"
     }
   ],
   "provisioners": [
@@ -116,7 +130,8 @@
     }
   ],
   "variables": {
-    "source_vmx": "{{ env `SOURCE_VMX` }}"
+    "iso_url": "{{ env `ISO_URL` }}",
+    "iso_checksum": "{{ env `ISO_CHECKSUM` }}"
   },
   "post-processors": [
     {

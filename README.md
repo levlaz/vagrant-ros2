@@ -35,12 +35,12 @@ This project provides a virtualized ROS2 development environment that runs on Ap
 ### Install Hashicorp Tools 
 ```
 brew tap hashicorp/tap
-brew install vagrant hashicorp/tap/packer
+brew install hashicorp/tap/hashicorp-vagrant hashicorp/tap/packer
 vagrant plugin install vagrant-vmware-desktop
 ```
 
 1. Clone this repository
-2. Install Vagrant and VMware Fusion
+2. Install Vagrant and VMware Fusion and Vagrant VMware Utility https://www.vagrantup.com/downloads/vmware 
 3. Run `vagrant up` to create and provision the virtual machine
 4. Run `vagrant ssh` to access the ROS2 development environment
 5. The Foxglove bridge will automatically start on port 8765

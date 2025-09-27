@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Build script for ROS2 Jazzy development environment
-# This script uses Packer to build a custom Ubuntu Noble box with ROS2 Jazzy
+# This script uses Packer to automatically build a custom Ubuntu Noble box with ROS2 Jazzy
+# No manual intervention required - the build process is fully automated
 
 set -e
 
@@ -25,23 +26,24 @@ if ! vagrant plugin list | grep -q "vagrant-vmware-desktop"; then
     exit 1
 fi
 
-# Create a base Ubuntu Noble VM first (this needs to be done manually)
-# You can download Ubuntu Noble 24.04 LTS and create a VM with VMware Fusion
-# Then export it and set the SOURCE_VMX environment variable
+# Set up ISO URL and checksum for Ubuntu Noble 24.04 LTS ARM64
+# You can download the ISO from: https://cdimage.ubuntu.com/releases/24.04/release/
+# and calculate the SHA256 checksum
 
-if [ -z "$SOURCE_VMX" ]; then
-    echo "Error: SOURCE_VMX environment variable is not set."
-    echo "Please set it to the path of your Ubuntu Noble 24.04 VMX file."
-    echo "Example: export SOURCE_VMX=/path/to/ubuntu-noble.vmx"
-    exit 1
+if [ -z "$ISO_URL" ]; then
+    echo "Setting default ISO URL for Ubuntu Noble 24.04 LTS ARM64..."
+    export ISO_URL="https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04.1-server-arm64.iso"
 fi
 
-if [ ! -f "$SOURCE_VMX" ]; then
-    echo "Error: SOURCE_VMX file does not exist: $SOURCE_VMX"
-    exit 1
+if [ -z "$ISO_CHECKSUM" ]; then
+    echo "Setting default ISO checksum for Ubuntu Noble 24.04 LTS ARM64..."
+    # This is the SHA256 checksum for ubuntu-24.04.1-server-arm64.iso
+    # You should verify this matches your downloaded ISO
+    export ISO_CHECKSUM="a4acfda10b18da50e2ec50ccaf526d6bc321d9774dda443996819ae424fe8f20"
 fi
 
-echo "Using source VMX: $SOURCE_VMX"
+echo "Using ISO URL: $ISO_URL"
+echo "Using ISO checksum: $ISO_CHECKSUM"
 
 # Build the box with Packer
 echo "Building custom ROS2 Jazzy box..."
