@@ -32,14 +32,14 @@ fi
 
 if [ -z "$ISO_URL" ]; then
     echo "Setting default ISO URL for Ubuntu Noble 24.04 LTS ARM64..."
-    export ISO_URL="https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04.1-server-arm64.iso"
+    export ISO_URL="https://cdimage.ubuntu.com/releases/24.04/release/ubuntu-24.04.3-desktop-arm64.iso"
 fi
 
 if [ -z "$ISO_CHECKSUM" ]; then
     echo "Setting default ISO checksum for Ubuntu Noble 24.04 LTS ARM64..."
     # This is the SHA256 checksum for ubuntu-24.04.1-server-arm64.iso
     # You should verify this matches your downloaded ISO
-    export ISO_CHECKSUM="a4acfda10b18da50e2ec50ccaf526d6bc321d9774dda443996819ae424fe8f20"
+    export ISO_CHECKSUM="cdbf0f83ab4f7d46be767e73c59b5cbca9743dd5fb887142c96f4b2df38fa5ad"
 fi
 
 echo "Using ISO URL: $ISO_URL"
@@ -47,7 +47,14 @@ echo "Using ISO checksum: $ISO_CHECKSUM"
 
 # Build the box with Packer
 echo "Building custom ROS2 Jazzy box..."
-packer build packer.json
+echo "Note: The build will run headless without GUI."
+echo ""
+
+# Set environment variables for better debugging
+export PACKER_LOG=1
+export PACKER_LOG_PATH="packer.log"
+
+packer build --on-error=abort packer.json
 
 echo "Build completed! You can now use the box with:"
 echo "  vagrant box add ros2-jazzy ros2-jazzy-arm64-vmware.box"

@@ -93,3 +93,6 @@ cmake_install.cmake
 Makefile
 *.cmake
 !CMakeLists.txt
+
+# Packer
+output-vmware-iso/

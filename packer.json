@@ -4,25 +4,22 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha256",
       "vmx_data": {
         "memsize": "8192",
         "numvcpus": "4",
-        "guestos": "ubuntu-64",
-        "virtualhw.version": "19",
-        "architecture": "arm64"
-      },
-      "vmx_data_post": {
-        "memsize": "8192",
-        "numvcpus": "4",
-        "architecture": "arm64"
+        "guestos": "arm-ubuntu-64",
+        "virtualhw.version": "20",
+        "architecture": "arm64",
+        "firmware": "efi",
+        "scsi0.present": "FALSE",
+        "sata0.present": "TRUE"
       },
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_timeout": "20m",
+      "ssh_timeout": "30m",
       "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
       "headless": true,
-      "boot_wait": "10s",
+      "boot_wait": "30s",
       "boot_command": [
         "<enter><wait><enter><wait><f6><esc><wait>",
         " autoinstall ds=nocloud-net\\;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",

@@ -60,6 +60,13 @@ This project includes Packer configuration to build a custom Ubuntu Noble (24.04
 
 ### Building Steps
 
+Install necessary packer plugins: 
+
+```
+packer plugins install github.com/hashicorp/vmware
+packer plugins install github.com/hashicorp/vagrant
+```
+
 1. Set the SOURCE_VMX environment variable to your Ubuntu Noble VMX file:
    ```bash
    export SOURCE_VMX=/path/to/your/ubuntu-noble.vmx
