@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get install -y ros-jazzy-desktop
     
     # Install Foxglove ROS bridge
-    sudo apt-get install -y ros-jazzy-foxglove-bridge
+    sudo apt-get install -y ros-jazzy-foxglove-bridge ros-jazzy-foxglove-msgs
     
     # Install additional ROS 2 tools
     sudo apt-get install -y python3-pip python3-venv
@@ -112,6 +112,9 @@ Vagrant.configure("2") do |config|
         colcon-test-result \
         colcon-zsh \
         rosdep \
+        numpy \
+        dlib \
+        opencv-python \
         vcstool"
     
     # Create auto-activation script
