@@ -9,17 +9,18 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "ros2-dev"
   
   # Memory and CPU allocation for M Series Mac (ARM64)
-  config.vm.provider "vmware_fusion" do |v|
+  config.vm.provider "vmware_desktop" do |v|
     v.memory = 8192
     v.cpus = 4
-    v.gui = false
+    v.gui = true
+    v.vmx["displayName"] = "Vagrant ROS2 VM"
   end
   
   # Network configuration for ROS2
   config.vm.network "private_network", ip: "192.168.56.10"
   
   # Shared folder for development
-  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
   
   # Port forwarding for ROS2 tools (if needed)
   config.vm.network "forwarded_port", guest: 11311, host: 11311, id: "roscore"
@@ -69,7 +70,7 @@ Vagrant.configure("2") do |config|
     
     # Install additional ROS 2 tools
     sudo apt-get install -y python3-pip
-    sudo pip3 install -U colcon-common-extensions
+    sudo pip3 install -U colcon-common-extensions --break-system-packages
     
     # Initialize rosdep
     sudo rosdep init

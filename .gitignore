@@ -94,5 +94,5 @@ Makefile
 *.cmake
 !CMakeLists.txt
 
-# Packer
-output-vmware-iso/
+# Vagrant
+.vagrant/
