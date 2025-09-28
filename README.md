@@ -1,6 +1,6 @@
 # ROS2 Development Environment for M Series Mac
 
-This repository contains tooling to create a development environment for working with ROS2 on an M Series Mac using VMware Fusion.
+This repository contains a Vagrant-based development environment for working with ROS2 on an M Series Mac using VMware Fusion.
 
 ## Overview
 
@@ -15,8 +15,6 @@ This project provides a virtualized ROS2 development environment that runs on Ap
   - VMware Fusion provider for Vagrant
     - [Vagrant VMware Provider Documentation](https://www.vagrantup.com/docs/providers/vmware)
     - [VMware Fusion Provider Plugin](https://github.com/hashicorp/vagrant-vmware-desktop)
-- Packer (for developing this project)
-  - [Packer Documentation](https://developer.hashicorp.com/packer/docs)
 - Sufficient disk space for the virtual machine
 - At least 8GB RAM (16GB recommended)
 
@@ -32,10 +30,10 @@ This project provides a virtualized ROS2 development environment that runs on Ap
 
 ## Quick Start
 
-### Install Hashicorp Tools 
+### Install Required Tools
 ```
 brew tap hashicorp/tap
-brew install hashicorp/tap/hashicorp-vagrant hashicorp/tap/packer
+brew install hashicorp/tap/hashicorp-vagrant
 vagrant plugin install vagrant-vmware-desktop
 ```
 
@@ -47,45 +45,9 @@ vagrant plugin install vagrant-vmware-desktop
 6. Connect to Foxglove Studio at `ws://localhost:8765` to visualize your ROS2 data
 7. Start developing with ROS2!
 
-## Building the Custom Box
+## How It Works
 
-This project includes Packer configuration to build a custom Ubuntu Noble (24.04) box with ROS2 Jazzy pre-installed.
-
-### Prerequisites for Building
-
-1. Download Ubuntu Noble 24.04 LTS ISO
-2. Create a VMware Fusion VM with Ubuntu Noble
-3. Install VMware Tools and configure the VM
-4. Export the VM and note the VMX file path
-
-### Building Steps
-
-Install necessary packer plugins: 
-
-```
-packer plugins install github.com/hashicorp/vmware
-packer plugins install github.com/hashicorp/vagrant
-```
-
-1. Set the SOURCE_VMX environment variable to your Ubuntu Noble VMX file:
-   ```bash
-   export SOURCE_VMX=/path/to/your/ubuntu-noble.vmx
-   ```
-
-2. Run the build script:
-   ```bash
-   ./build.sh
-   ```
-
-3. Add the custom box to Vagrant:
-   ```bash
-   vagrant box add ros2-jazzy ros2-jazzy-arm64-vmware.box
-   ```
-
-4. Use the custom box:
-   ```bash
-   vagrant up
-   ```
+This project uses Vagrant to automatically provision an Ubuntu 24.04 LTS ARM64 virtual machine with ROS2 Jazzy pre-installed. The provisioning happens automatically when you run `vagrant up`, so no manual setup is required.
 
 ## Project Structure
 
@@ -93,14 +55,12 @@ packer plugins install github.com/hashicorp/vagrant
 ├── README.md           # This file
 ├── .gitignore         # Git ignore rules
 ├── LICENSE            # MIT License
-├── packer.json        # Packer configuration for building custom box
-├── Vagrantfile.template # Template for Vagrant configuration
-└── build.sh           # Build script for creating custom box
+└── Vagrantfile        # Vagrant configuration with ROS2 provisioning
 ```
 
 ## ROS2 Version
 
-This project uses ROS2 Jazzy Jalisco, the latest LTS version, running on Ubuntu Noble 24.04 LTS. The configuration follows the [official ROS2 Jazzy installation documentation](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
+This project uses ROS2 Jazzy Jalisco, the latest LTS version, running on Ubuntu 22.04 LTS (Jammy). The configuration follows the [official ROS2 Jazzy installation documentation](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
 
 ## Foxglove Integration
 
