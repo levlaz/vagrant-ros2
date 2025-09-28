@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   # Use Ubuntu 24.04 LTS ARM64 for M Series Macs
-  config.vm.box = "ubuntu/noble64-arm"
+  config.vm.box = "levlaz_org/ubuntu-24-arm"
   
   # Configure the VM
   config.vm.hostname = "ros2-dev"
