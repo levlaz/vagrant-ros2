@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Use Ubuntu 24.04 LTS ARM64 for M Series Macs
+  config.vm.box = "ubuntu2404-arm-parallels"
+  
+  # Configure the VM
+  config.vm.hostname = "ros2-dev"
+  
+  # Memory and CPU allocation for M Series Mac (ARM64)
+  config.vm.provider "parallels" do |v|
+    v.memory = 8192
+    v.cpus = 4
+    v.name = "Vagrant ROS2 VM"
+  end
+  
+  # Network configuration for ROS2
+  config.vm.network "private_network", ip: "192.168.56.10"
+  
+  # Shared folder for development
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
+  
+  # Port forwarding for ROS2 tools (if needed)
+  config.vm.network "forwarded_port", guest: 11311, host: 11311, id: "roscore", auto_correct: true
+  
+  # Port forwarding for Foxglove bridge (default port 8765)
+  config.vm.network "forwarded_port", guest: 8765, host: 8765, id: "foxglove-bridge", auto_correct: true
+
+  # Port forwarding for VNC
+  config.vm.network "forwarded_port", guest: 5900, host: 5900, id: "vnc", auto_correct: true
+  
+  # Provisioning script to install ROS2 Jazzy
+  config.vm.provision "shell", path: "../scripts/ros2_provision.sh"
+end
